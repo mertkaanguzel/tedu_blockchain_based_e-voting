@@ -44,6 +44,10 @@ contract VotingContract {
 
     function declareWinner() external view
         returns(string memory winner){
+            //require to be admin ekle
+        require(
+            msg.sender == admin;
+        );
         uint winningIndex;
         uint voteCounter = 0;
         for(uint i = 0; i < parties.length; i++) {
@@ -56,15 +60,15 @@ contract VotingContract {
         winner = parties[winningIndex].partyName; 
     }
 
-    function makeEligibleToVote(address VoterUser) external {
+    function makeEligibleToVote(address voterUser) external {
         require(
             msg.sender == admin
         );
         require(
-            !voters[VoterUser].votingState 
+            !voters[voterUser].votingState 
         );
-        if(!voters[VoterUser].canVote) {
-            voters[VoterUser].canVote = true;
+        if(!voters[voterUser].canVote) {
+            voters[voterUser].canVote = true;
         }   
     } 
 
