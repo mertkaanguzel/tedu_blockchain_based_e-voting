@@ -1,8 +1,5 @@
-<<<<<<< Updated upstream
-=======
 // SPDX-License-Identifier: GPL-3.0
 
->>>>>>> Stashed changes
 pragma solidity >=0.7.0 <0.9.0;
 
 contract VotingContract {
@@ -28,11 +25,7 @@ contract VotingContract {
     constructor(string[] memory partyNames) {
         admin = msg.sender;
 
-<<<<<<< Updated upstream
-        for(uint i = 0; i < partyName.length; i++) {
-=======
         for(uint i = 0; i < partyNames.length; i++) {
->>>>>>> Stashed changes
             parties.push(Party({
                 partyName: partyNames[i],
                 numberOfVotes: 0
@@ -50,12 +43,7 @@ contract VotingContract {
     }
 
     function declareWinner() external view
-<<<<<<< Updated upstream
-        returns(string winner)
-    {
-=======
         returns(string memory winner){
->>>>>>> Stashed changes
         uint winningIndex;
         uint voteCounter = 0;
         for(uint i = 0; i < parties.length; i++) {
@@ -70,11 +58,7 @@ contract VotingContract {
 
     function makeEligibleToVote(address VoterUser) external {
         require(
-<<<<<<< Updated upstream
-            msg.sender == admin;
-=======
             msg.sender == admin
->>>>>>> Stashed changes
         );
         require(
             !voters[VoterUser].votingState 
