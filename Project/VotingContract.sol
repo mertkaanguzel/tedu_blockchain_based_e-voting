@@ -35,7 +35,11 @@ contract VotingContract {
 
     function giveVote(uint partyIndex) external {
         VoterUser storage caller = voters[msg.sender];
+<<<<<<< HEAD
         require(caller.canVote);
+=======
+        require(!caller.canVote);
+>>>>>>> 835b9104d28698e8dc0689382f743c0d11df1cce
         require(!caller.votingState);
         caller.votingState = true;
         caller.votedParty = partyIndex;
@@ -46,7 +50,11 @@ contract VotingContract {
         returns(string memory winner){
             //require to be admin ekle
         require(
+<<<<<<< HEAD
             msg.sender == admin
+=======
+            msg.sender == admin;
+>>>>>>> 835b9104d28698e8dc0689382f743c0d11df1cce
         );
         uint winningIndex;
         uint voteCounter = 0;
