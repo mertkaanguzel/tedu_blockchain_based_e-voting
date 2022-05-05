@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@truffle/hdwallet-provider": "^2.0.7",
+    "@truffle/hdwallet-provider": "^2.0.8",
     "fs-extra": "^10.1.0",
     "ganache-cli": "^6.12.2",
     "mocha": "^9.2.2",
