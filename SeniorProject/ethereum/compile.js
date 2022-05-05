@@ -9,30 +9,36 @@ const votingPath = path.resolve(__dirname, 'contracts', 'VotingContract.sol');
 const source = fs.readFileSync(votingPath, 'utf8');
  
 const input = {
-    language: 'Solidity',
-    sources: {
-      'VotingContract.sol': {
-        content: source,
+  language: "Solidity",
+  sources: {},
+  settings: {
+    metadata: {
+      useLiteralContent: true,
+    },
+    outputSelection: {
+      "*": {
+        "*": ["*"],
       },
     },
-    settings: {
-      outputSelection: {
-        '*': {
-          '*': ['*'],
-        },
-      },
-    },
+  },
+};
+
+
+input.sources['VotingContract.sol'] = {
+  content: source,
 };
  
-output = JSON.parse(solc.compile(JSON.stringify(input))).contracts[
-    'VotingContract.sol'
-];
- 
+const output = JSON.parse(solc.compile(JSON.stringify(input)));
+const contracts = output.contracts['VotingContract.sol'];
+
 fs.ensureDirSync(buildPath); //create build directory if it does not exist yet
  
-for(let contract in output) {
-    fs.outputJsonSync(
-        path.resolve(buildPath, contract.replace(':', '') + '.json'),
-        output[contract]
-    );
+for(let contract in contracts) {
+    //fs.outputJsonSync(
+       // path.resolve(buildPath, `${contract}.json`),
+      //  contracts[contract]
+   // );
+    if (contracts.hasOwnProperty(contract)) {
+      fs.outputJsonSync(path.resolve(buildPath, `${contract}.json`), contracts[contract]);
+    }
 }

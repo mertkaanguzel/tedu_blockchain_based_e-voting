@@ -1,10 +1,10 @@
-const HDWalletProvider = require('truffle-hdwallet-provider');
+const HDWalletProvider = require('@truffle/hdwallet-provider');
 const Web3 = require('web3');
-const compiledContract = require('./build/VotingContract.json');
+const { abi, evm } = require('./build/VotingContract.json');
 
 const provider = new HDWalletProvider(
-    'light trial fashion island dignity identify tone acquire unfold view airport trip',
-    'https://rinkeby.infura.io/v3/c445534b73a7416eb7583e01212643f1'
+  'endorse give match worry mesh eager organ solar pet destroy company sustain',
+  'https://rinkeby.infura.io/v3/1c441c37e1cc49d38be059fcdfb8ca61'
 );
 const web3 = new Web3(provider);
 
@@ -13,12 +13,14 @@ const deploy = async () => {
 
   console.log('Trying to make deployment from the account', accounts[0]);
 
-  const result = await new web3.eth.Contract(
-    JSON.parse(compiledContract.interface)
-  )
-    .deploy({ data: compiledContract.bytecode })
-    .send({ gas: '1000000', from: accounts[0] });
+  const contract = await new web3.eth.Contract(abi)
+  const deploy = contract.deploy({ data: '0x' + evm.bytecode.object,
+  arguments: [['protest','Party1','Party2']]
+});
+  const VotingContract = await deploy.send({ gas: '1000000', from: accounts[0] });
 
-  console.log('Contract is deployed to', result.options.address);
+  console.log('Contract is deployed to', VotingContract.options.address);
+
+  provider.engine.stop();
 };
 deploy();
