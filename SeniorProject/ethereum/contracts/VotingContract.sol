@@ -66,6 +66,8 @@ contract VotingContract {
         }   
     }
 
+    //function addParty(string memory party) external onlyAdmin { }
+
     modifier onlyAdmin {
         require(
             msg.sender == admin

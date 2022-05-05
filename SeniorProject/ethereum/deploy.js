@@ -1,4 +1,4 @@
-const HDWalletProvider = require('truffle-hdwallet-provider');
+const HDWalletProvider = require('@truffle/hdwallet-provider');
 const Web3 = require('web3');
 const compiledContract = require('./build/VotingContract.json');
 
@@ -10,12 +10,11 @@ const web3 = new Web3(provider);
 
 const deploy = async () => {
   const accounts = await web3.eth.getAccounts();
+  const parties = await web3.eth.
 
   console.log('Trying to make deployment from the account', accounts[0]);
 
-  const result = await new web3.eth.Contract(
-    JSON.parse(compiledContract.interface)
-  )
+  const result = await new web3.eth.Contract(compiledContract.abi)
     .deploy({ data: compiledContract.bytecode })
     .send({ gas: '1000000', from: accounts[0] });
 
