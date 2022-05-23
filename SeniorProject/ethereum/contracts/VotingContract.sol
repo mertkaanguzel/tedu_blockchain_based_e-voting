@@ -5,6 +5,7 @@ pragma solidity >=0.7.0 <0.9.0;
 contract VotingContract {
     
     address public admin;
+    string public winner;
 
     struct Party {
         string partyName;
@@ -42,9 +43,7 @@ contract VotingContract {
         parties[partyIndex].numberOfVotes += 1; 
     }
 
-    function declareWinner() external onlyAdmin view
-        returns(string memory winner){
-            //require to be admin ekle
+    function declareWinner() external onlyAdmin {
         uint winningIndex;
         uint voteCounter = 0;
         for(uint i = 0; i < parties.length; i++) {

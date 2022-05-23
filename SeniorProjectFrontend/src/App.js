@@ -18,8 +18,9 @@ function App() {
   const [accounts, setAccounts] = useState([]);
   const [balance, setBalance] = useState("");
   const [ballot, setBallot] = useState([]);
-  //const [value, setValue] = useState("");
-  //const [message, setMessage] = useState("");
+  const [winner, setWinner] = useState("");
+  const [message, setMessage] = useState("");
+  const [adress, setAddress] = useState("");
 
   const [enteringVoting, setEnteringVoting] = useState(false);
   const [pickingWinner, setPickingWinner] = useState(false);
@@ -125,18 +126,24 @@ function App() {
       candidates.push(await VotingContract.current.methods.parties(i).call());
     }
     setBallot(candidates);
+
+    let winner = await VotingContract.current.methods.winner().call();
+    setWinner(winner);
   };
-/*
+
   const onSubmit = async (event) => {
     event.preventDefault();
     setEnteringVoting(true);
-    const accounts = await web3.eth.getAccounts();
+    //const accounts = await web3.eth.getAccounts();
     showMessage("Waiting on transaction success...");
-    await VotingContract.current.methods.enter().send({
+    /*
+    await VotingContract.current.methods.makeEligibleToVote().send({
       from: accounts[0],
-      value: web3.utils.toWei(value, "ether")
+      value: adress
     });
-    showMessage("You have been entered!");
+    */
+    giveRighttoVote(adress);
+    showMessage("The address has right to vote!");
     updatePlayersListAndBalance();
     setEnteringVoting(false);
   };
@@ -146,7 +153,7 @@ function App() {
     setPickingWinner(true);
     const accounts = await web3.eth.getAccounts();
     showMessage("Waiting on transaction success...");
-    await VotingContract.current.methods.pickWinner().send({
+    await VotingContract.current.methods.declareWinner().send({
       from: accounts[0]
     });
     showMessage("A winner has been picked!");
@@ -158,12 +165,13 @@ function App() {
     setMessage(msg);
   };
 
-*/
+
 const vote = async (index) =>{
-  giveRighttoVote(accounts[0]);
+  //giveRighttoVote(accounts[0]);
   await VotingContract.current.methods.giveVote(index).send({
      from: accounts[0]
   })
+  updatePlayersListAndBalance();
 }
 
 const giveRighttoVote = async(address) =>{
@@ -277,7 +285,41 @@ const giveRighttoVote = async(address) =>{
          );
         })}
        </div>
+       
+       {manager.toLowerCase() === ethereum.selectedAddress && (
+              <>
+                <hr />
+
+                <form onSubmit={onSubmit}>
+              <h4>Give Someone Right to Vote </h4>
+              
+                <label>Address of the User:</label>{" "}
+                <input value={adress} onChange={(event) => setAddress(event.target.value)} />{" "}
+                <button className="btn primaryBtn" type="submit" disabled={enteringVoting}>
+                  Enter
+                </button>
+              
+            </form>
+
+                <h4>End the Voting</h4>
+                <button
+                  className="btn primaryBtn"
+                  type="button"
+                  onClick={pickWinner}
+                  disabled={pickingWinner}
+                >
+                  Get the result
+                </button>
+              </>
+            )}
+
+<h2>{message}</h2>
+<h2>{winner}</h2>
+
       </div>
+
+        
+
       )}
     </div>
   );
