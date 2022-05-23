@@ -66,6 +66,9 @@ contract VotingContract {
         }   
     }
 
+ function getPartyNumber() external view  returns(uint) {
+        return parties.length;
+ }
     //function addParty(string memory party) external onlyAdmin { }
 
     modifier onlyAdmin {
@@ -73,6 +76,8 @@ contract VotingContract {
             msg.sender == admin
         );
         _;
-    } 
+    }
+
+
 
 }

@@ -10,7 +10,6 @@ const web3 = new Web3(provider);
 
 const deploy = async () => {
   const accounts = await web3.eth.getAccounts();
-  const parties = await web3.eth.
 
   console.log('Trying to make deployment from the account', accounts[0]);
 
