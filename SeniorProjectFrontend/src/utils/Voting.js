@@ -8,7 +8,7 @@
 
 export const { abi, evm } = require('./VotingContract.json');
 
-export const contractAddress = "0x94Cfff21d9c29EDB09f429b9B6CfEC4DEf1204f6";
+export const contractAddress = "0x44924a852ebE92926214Adf5e44018EfF3ca017f";
 /*
 export const abi = [
   {
